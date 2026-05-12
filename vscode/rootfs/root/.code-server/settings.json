@@ -22,7 +22,10 @@
     "**/deps/**": true,
     "**/node_modules": true,
     "**/OZW_Log.txt": true,
-    "**/pyozw.sqlite": true
+    "**/pyozw.sqlite": true,
+    "**/tts/**": true,
+    "**/www/community/**": true,
+    "**/www/custom_ui/**": true
   },
   "search.exclude": {
     ".Trash-0/**": true,
@@ -41,7 +44,10 @@
     "**/deps/**": true,
     "**/node_modules": true,
     "**/OZW_Log.txt": true,
-    "**/pyozw.sqlite": true
+    "**/pyozw.sqlite": true,
+    "**/tts/**": true,
+    "**/www/community/**": true,
+    "**/www/custom_ui/**": true
   },
   "files.exclude": {
     ".Trash-0/**": true,
@@ -85,15 +91,35 @@
     "editor.formatOnPaste": true
   },
   "editor.renderWhitespace": "boundary",
+  "extensions.autoCheckUpdates": false,
+  "extensions.autoUpdate": false,
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
   "esphome.validator": "local",
+  "python.defaultInterpreterPath": "/usr/bin/python3",
+  "redhat.telemetry.enabled": false,
+  "ruff.configurationPreference": "filesystemFirst",
+  "ruff.importStrategy": "useBundled",
+  "ruff.nativeServer": "on",
   "telemetry.enableTelemetry": false,
+  "telemetry.telemetryLevel": "off",
   "terminal.integrated.copyOnSelection": true,
-  "terminal.integrated.shell.linux": "/usr/bin/zsh",
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.profiles.linux": {
+    "zsh": {
+      "path": "/usr/bin/zsh"
+    }
+  },
   "update.mode": "none",
+  "vscode-home-assistant.disableAutomaticFileAssociation": true,
   "vsicons.dontShowNewVersionMessage": true,
   "vsicons.projectDetection.disableDetect": true,
   "workbench.activityBar.location": "top",
+  "workbench.editor.highlightModifiedTabs": true,
   "workbench.iconTheme": "vscode-icons",
+  "workbench.startupEditor": "none",
   "yaml.format.enable": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.rulers": [80, 88, 100, 120]
