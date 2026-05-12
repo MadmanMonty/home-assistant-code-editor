@@ -130,4 +130,4 @@ summarizes the Code Editor modernization through
 - Current summarized commit:
   `a087e51e9a8b8bf72a238d881f52b89bf899770d`
 - code-server `v4.118.0` release:
-  https://github.com/coder/code-server/releases/tag/v4.118.0
+  [https://github.com/coder/code-server/releases/tag/v4.118.0](https://github.com/coder/code-server/releases/tag/v4.118.0)
