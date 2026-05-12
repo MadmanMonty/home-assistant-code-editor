@@ -1,6 +1,6 @@
 # MIT License
 
-Copyright (c) 2019-2025 Franck Nijhof
+Copyright (c) 2019-2025 Franck Nijhof  
 Copyright (c) 2026 Jeremy Gollehon
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
