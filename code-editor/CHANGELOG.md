@@ -57,7 +57,7 @@ summarizes the Code Editor modernization through
 - Changed build-time extension handling to download validated VSIX packages into
   `/usr/local/share/code-server/vsix`.
 - Changed startup extension handling to install bundled VSIX packages through
-  `code-server --install-extension` into `/data/vscode/extensions`.
+  `code-server --install-extension` into `/data/code-editor/extensions`.
 - Avoids reinstalling bundled extensions when the requested version is already
   present.
 - Clears stale extension scanner files, including `.obsolete` and
@@ -115,7 +115,7 @@ summarizes the Code Editor modernization through
   this as a separate app from the original Studio Code Server add-on.
 - The default mapped workspace is now focused on `/config`. Add any extra
   command-line tools you need through the `packages` option.
-- Existing user editor settings continue to persist in `/data/vscode`. Default
+- User editor settings persist in `/data/code-editor`. Default
   settings are refreshed only when the stored settings still match a known
   previous default.
 
