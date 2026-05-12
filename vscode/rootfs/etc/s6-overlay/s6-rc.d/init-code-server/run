@@ -44,15 +44,27 @@ if ! bashio::fs.directory_exists '/data/vscode'; then
         || bashio::exit.nok "Could not create persistent storage folder."
 fi
 
-# Clean up copies of extensions we deliver from the persistent storage
-while read -r ext; do
-    extension="${ext%%#*}"
-    # shellcheck disable=SC2086
-    rm -f -r /data/vscode/extensions/${extension,,}*
-done < /root/vscode.extensions
-
 # Ensure user extensions folder exists
 mkdir -p /data/vscode/extensions
+
+# Sync bundled extensions into the runtime extensions folder.
+while read -r ext; do
+    ext="${ext//$'\r'/}"
+    extension="${ext%%#*}"
+    version="${ext##*#}"
+
+    [[ -z "${extension}" ]] && continue
+
+    find /data/vscode/extensions \
+        -maxdepth 1 \
+        -iname "${extension}-*" \
+        -exec rm -rf '{}' +
+
+    cp -a \
+        "/usr/local/lib/code-server/lib/vscode/extensions/${extension}-${version}" \
+        "/data/vscode/extensions/${extension}-${version}" \
+        || bashio::exit.nok "Failed installing bundled extension: ${extension}"
+done < /root/vscode.extensions
 
 # Sets up default user settings on first start.
 if ! bashio::fs.file_exists '/data/vscode/User/settings.json'; then
