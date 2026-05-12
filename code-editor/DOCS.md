@@ -39,11 +39,11 @@ The default value is your main Home Assistant configuration folder:
 /config
 ```
 
-Change this only if you want Code Editor to open a different folder when it
-starts, such as:
+Change this only if you want Code Editor to open a different folder under your
+Home Assistant configuration, such as:
 
 ```text
-/share/my-folder
+/config/custom-folder
 ```
 
 ### `packages`
