@@ -47,22 +47,31 @@ fi
 # Ensure user extensions folder exists
 mkdir -p /data/vscode/extensions
 
-# Sync bundled extensions into the runtime extensions folder.
+# Clear stale extension scanner state from previous add-on versions.
+rm -f /data/vscode/extensions/.obsolete \
+    /data/vscode/extensions/extensions.json
+
+# Install bundled extensions into the runtime extensions folder.
 while read -r ext; do
     ext="${ext//$'\r'/}"
     extension="${ext%%#*}"
     version="${ext##*#}"
+    vsix="/usr/local/share/code-server/vsix/${extension}-${version}.vsix"
 
     [[ -z "${extension}" ]] && continue
+
+    bashio::log.info "Installing bundled extension: ${extension} ${version}"
 
     find /data/vscode/extensions \
         -maxdepth 1 \
         -iname "${extension}-*" \
         -exec rm -rf '{}' +
 
-    cp -a \
-        "/usr/local/lib/code-server/lib/vscode/extensions/${extension}-${version}" \
-        "/data/vscode/extensions/${extension}-${version}" \
+    code-server \
+        --user-data-dir /data/vscode \
+        --extensions-dir /data/vscode/extensions \
+        --install-extension "${vsix}" \
+        --force \
         || bashio::exit.nok "Failed installing bundled extension: ${extension}"
 done < /root/vscode.extensions
 

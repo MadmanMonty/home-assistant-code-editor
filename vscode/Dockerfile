@@ -28,7 +28,6 @@ RUN \
     \
     && apt-get install -y --no-install-recommends \
         ack=3.8.1-1 \
-        libarchive-tools=3.7.4-4 \
         build-essential=12.12 \
         colordiff=1.0.21-1 \
         git=1:2.47.3-0+deb13u1 \
@@ -66,30 +65,27 @@ RUN \
     \
     && ln -s /usr/local/lib/code-server/bin/code-server /usr/local/bin/code-server \
     \
-    && mkdir -p /root/.code-server/extensions \
+    && mkdir -p /usr/local/share/code-server/vsix \
     && uuid=$(uuidgen) \
     && while read -r ext; do \
         ext="${ext//$'\r'/}"; \
         [[ -z "${ext%%#*}" ]] && continue; \
-        extention="${ext%%#*}" \
-        vendor="${extention%%.*}"; \
-        slug="${extention#*.}"; \
+        extension="${ext%%#*}"; \
+        vendor="${extension%%.*}"; \
+        slug="${extension#*.}"; \
         version="${ext##*#}"; \
         \
         echo "Installing vscode extension: ${slug} by ${vendor} @ ${version} "; \
         \
         echo "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/${vendor}/vsextensions/${slug}/${version}/vspackage"; \
-        curl -JL --retry 5 -o "/tmp/${extention}-${version}.vsix" \
+        curl -JL --retry 5 -o "/usr/local/share/code-server/vsix/${extension}-${version}.vsix" \
             -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" \
             -H "x-market-user-id: ${uuid}" \
             "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/${vendor}/vsextensions/${slug}/${version}/vspackage"; \
-        mkdir -p "/usr/local/lib/code-server/lib/vscode/extensions/${extention}-${version}"; \
-        bsdtar --strip-components=1 -xf "/tmp/${extention}-${version}.vsix" \
-                    -C "/usr/local/lib/code-server/lib/vscode/extensions/${extention}-${version}" extension; \
         [ $? -ne 0 ] && exit 1; \
         sleep 1; \
     done < /root/vscode.extensions \
-    && ls -la /usr/local/lib/code-server/lib/vscode/extensions/ \
+    && ls -la /usr/local/share/code-server/vsix/ \
     \
     && curl -L -s -o /usr/bin/ha \
         "https://github.com/home-assistant/cli/releases/download/${HA_CLI_VERSION}/ha_${BUILD_ARCH}" \
@@ -114,7 +110,6 @@ RUN \
     \
     && apt-get purge -y --auto-remove \
         build-essential \
-        libarchive-tools \
         python3-dev \
         uuid-runtime \
     \
