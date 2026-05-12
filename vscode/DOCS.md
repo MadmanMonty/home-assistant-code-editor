@@ -142,8 +142,8 @@ Open an issue in this repository for app-specific problems.
 
 ## Credits
 
-This app is based on the original Home Assistant Community Add-on Studio Code
-Server project by Franck Nijhof and contributors.
+This app is based on the original Studio Code Server project by Franck Nijhof
+and contributors.
 
 ## License
 

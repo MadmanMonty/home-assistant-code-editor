@@ -89,21 +89,6 @@
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "lukas-tr/vscode-materialdesignicons-intellisense",
       "extractVersionTemplate": "^v(?<version>.*)$"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": ["/vscode/vscode.extensions$/"],
-      "matchStrings": ["netcorext\\.uuid-generator#(?<currentValue>.+)\\s"],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "arenchen/vscode-uuid-generator"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": ["/vscode/vscode.extensions$/"],
-      "matchStrings": ["usernamehw\\.errorlens#(?<currentValue>.+)\\s"],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "usernamehw/vscode-error-lens",
-      "extractVersionTemplate": "^v(?<version>.*)$"
     }
   ],
   "packageRules": [

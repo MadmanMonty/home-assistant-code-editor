@@ -49,8 +49,8 @@ version, Supervisor version, architecture, and the app log.
 
 ## Credits
 
-This app is based on the original Home Assistant Community Add-on Studio Code
-Server project by Franck Nijhof and contributors.
+This app is based on the original Studio Code Server project by Franck Nijhof
+and contributors.
 
 ## License
 

@@ -1,7 +1,7 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
 # ==============================================================================
-# Home Assistant Community Add-on: Studio Code Server
+# Code Editor
 # Sets up code-server.
 # ==============================================================================
 declare config_path
@@ -51,7 +51,7 @@ fi
 # Ensure user extensions folder exists
 mkdir -p /data/vscode/extensions
 
-# Clear stale extension scanner state from previous add-on versions.
+# Clear stale extension scanner state from previous app versions.
 rm -f /data/vscode/extensions/.obsolete \
     /data/vscode/extensions/extensions.json
 
