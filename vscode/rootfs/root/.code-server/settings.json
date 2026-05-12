@@ -92,7 +92,8 @@
   "update.mode": "none",
   "vsicons.dontShowNewVersionMessage": true,
   "vsicons.projectDetection.disableDetect": true,
-  "workbench.iconTheme": "vs-seti",
+  "workbench.activityBar.location": "top",
+  "workbench.iconTheme": "vscode-icons",
   "yaml.format.enable": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.rulers": [80, 88, 100, 120]

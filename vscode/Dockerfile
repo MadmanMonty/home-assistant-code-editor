@@ -78,11 +78,13 @@ RUN \
         echo "Installing vscode extension: ${slug} by ${vendor} @ ${version} "; \
         \
         echo "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/${vendor}/vsextensions/${slug}/${version}/vspackage"; \
-        curl -JL --retry 5 -o "/usr/local/share/code-server/vsix/${extension}-${version}.vsix" \
+        curl -fJL --compressed --retry 5 -o "/usr/local/share/code-server/vsix/${extension}-${version}.vsix" \
             -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" \
             -H "x-market-user-id: ${uuid}" \
             "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/${vendor}/vsextensions/${slug}/${version}/vspackage"; \
         [ $? -ne 0 ] && exit 1; \
+        unzip -tq "/usr/local/share/code-server/vsix/${extension}-${version}.vsix" >/dev/null \
+            || { echo "Downloaded extension package is not a valid VSIX: ${extension} ${version}"; exit 1; }; \
         sleep 1; \
     done < /root/vscode.extensions \
     && ls -la /usr/local/share/code-server/vsix/ \
