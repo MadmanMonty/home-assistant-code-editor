@@ -17,6 +17,12 @@ COPY requirements.txt /tmp/requirements.txt
 # Copy in extensions list
 COPY vscode.extensions /root/vscode.extensions
 
+# Patch script that strips legacy-syntax markers from the
+# vscode-home-assistant extension's bundled JSON schemas, so YAML
+# autocomplete suggests modern keys (`trigger:`, `action:`) instead of
+# the deprecated forms (`platform:`, `service:`).
+COPY patch-ha-schemas.py /tmp/patch-ha-schemas.py
+
 # Setup base system
 ARG BUILD_ARCH=amd64
 ARG CODE_SERVER_VERSION="v4.118.0"
@@ -90,8 +96,23 @@ RUN \
                 "${package_url}" \
                 || exit 1; \
         fi; \
-        unzip -tq "/usr/local/share/code-server/vsix/${extension}-${version}.vsix" >/dev/null \
+        vsix_path="/usr/local/share/code-server/vsix/${extension}-${version}.vsix"; \
+        unzip -tq "${vsix_path}" >/dev/null \
             || { echo "Downloaded extension package is not a valid VSIX: ${extension} ${version}"; exit 1; }; \
+        if [[ "${extension}" = "keesschollaart.vscode-home-assistant" ]]; then \
+            echo "Patching ${extension} schemas to remove legacy-syntax markers"; \
+            work=$(mktemp -d); \
+            unzip -q "${vsix_path}" -d "${work}" \
+                || { echo "Failed to unpack VSIX for patching: ${extension}"; rm -rf "${work}"; exit 1; }; \
+            python3 /tmp/patch-ha-schemas.py "${work}" \
+                || { echo "Schema patch failed: ${extension}"; rm -rf "${work}"; exit 1; }; \
+            rm -f "${vsix_path}"; \
+            ( cd "${work}" && zip -qr "${vsix_path}" . ) \
+                || { echo "Failed to repack VSIX: ${extension}"; rm -rf "${work}"; exit 1; }; \
+            unzip -tq "${vsix_path}" >/dev/null \
+                || { echo "Repacked VSIX failed validation: ${extension}"; rm -rf "${work}"; exit 1; }; \
+            rm -rf "${work}"; \
+        fi; \
         sleep 1; \
     done < /root/vscode.extensions \
     && ls -la /usr/local/share/code-server/vsix/ \
