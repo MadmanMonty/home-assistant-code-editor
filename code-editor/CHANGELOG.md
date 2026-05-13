@@ -6,9 +6,9 @@ This release patches the bundled `Home Assistant Extension`
   (`v2.2.0`) to remove deprecated property markers
   from its JSON schemas.
   
-It now suggestes the modern Home Assistant syntax.
-- `triggers` instead of `platform`
-- `actions` instead of `service`
+It now suggests the modern Home Assistant syntax.
+- `trigger` instead of `platform`
+- `action` instead of `service`
   
 
 ## 1.118.0 - 2026-05-12

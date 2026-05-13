@@ -1,9 +1,15 @@
 # Changelog
 
-This changelog starts at fork point
-`776ef9119524ff489345a6a60e13333264e67b1c` from December 30, 2025 and
-summarizes the Code Editor modernization through
-`a087e51e9a8b8bf72a238d881f52b89bf899770d` from May 12, 2026.
+## 1.118.0.1 - 2026-05-13
+
+This release patches the bundled `Home Assistant Extension`
+  (`v2.2.0`) to remove deprecated property markers
+  from its JSON schemas.
+  
+It now suggests the modern Home Assistant syntax.
+- `trigger` instead of `platform`
+- `action` instead of `service`
+  
 
 ## 1.118.0 - 2026-05-12
 
@@ -60,6 +66,8 @@ summarizes the Code Editor modernization through
 
 - Changed build-time extension handling to download validated VSIX packages into
   `/usr/local/share/code-server/vsix`.
+- Downloads platform-specific VSIX packages for each supported architecture so
+  native extension binaries, such as Ruff, match the Linux runtime.
 - Changed startup extension handling to install bundled VSIX packages through
   `code-server --install-extension` into `/data/code-editor/extensions`.
 - Avoids reinstalling bundled extensions when the requested version is already
@@ -68,8 +76,8 @@ summarizes the Code Editor modernization through
   `extensions.json`, from persistent extension storage on startup.
 - Added warnings for missing or failed bundled extension installs so extension
   state is easier to diagnose.
-- Added `extensions.supportNodeGlobalNavigator` for newer extension runtime
-  behavior.
+- Disabled Node global `navigator` support by default to avoid known extension
+  compatibility issues in the bundled extension host.
 - Disabled extension auto-check and auto-update by default so the Home Assistant
   editor environment stays deterministic across restarts.
 
@@ -99,7 +107,7 @@ summarizes the Code Editor modernization through
 - Updated the integrated terminal configuration to use the modern zsh profile
   settings.
 - Added defaults for line endings, final newlines, trimming trailing whitespace,
-  the Python interpreter path, Ruff behavior, and telemetry opt-outs.
+  the Python interpreter path, optional Ruff behavior, and telemetry opt-outs.
 - Preserved Home Assistant YAML associations, YAML custom tags, ESPHome local
   validation, and format-on-save behavior for Home Assistant YAML files.
 
