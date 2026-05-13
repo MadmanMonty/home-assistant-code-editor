@@ -7,6 +7,7 @@ ms-python.debugpy#2026.7.11311009
 ms-python.python#2026.5.2026050801
 ms-python.vscode-pylance#2026.2.102
 redhat.vscode-yaml#1.24.2026050908
+saber2pr.file-git-history#0.0.40
 charliermarsh.ruff#2026.40.0
 vscode-icons-team.vscode-icons#12.15.0
 wholroyd.jinja#0.0.8

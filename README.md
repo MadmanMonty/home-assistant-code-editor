@@ -42,6 +42,9 @@ Code Editor includes extensions chosen for editing Home Assistant files:
   validation while editing YAML configuration.
 - **YAML** helps find indentation, spacing, and structure problems in YAML files.
 - **ESPHome** makes ESPHome device configuration easier to read and edit.
+- **File Git History** shows the git commit history for the file you are
+  editing, so you can see how an automation or configuration changed over
+  time without leaving the editor.
 - **Jinja** improves editing for Home Assistant templates used in automations,
   template sensors, notifications, and dashboards.
 - **Material Design Icons Intellisense** helps you find and insert `mdi:` icons
