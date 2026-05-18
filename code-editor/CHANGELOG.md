@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.118.0.2 - 2026-05-18
+
+Updates the bundled `Home Assistant Extension` from `v2.2.0` to `v2.3.0`.
+
+The schema patch from `1.118.0.1` continues to apply, so YAML
+autocomplete still only suggests the modern Home Assistant syntax
+(`trigger`, `action`).
+
 ## 1.118.0.1 - 2026-05-13
 
 This release patches the bundled `Home Assistant Extension`

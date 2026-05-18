@@ -23,6 +23,11 @@ COPY vscode.extensions /root/vscode.extensions
 # the deprecated forms (`platform:`, `service:`).
 COPY patch-ha-schemas.py /tmp/patch-ha-schemas.py
 
+# Vendored VSIX packages. A file at
+# `vendor/${vendor}.${slug}-${version}.vsix` is used in place of the
+# VS Code Marketplace download for that extension at build time.
+COPY vendor/ /tmp/vendor/
+
 # Setup base system
 ARG BUILD_ARCH=amd64
 ARG CODE_SERVER_VERSION="v4.118.0"
@@ -84,17 +89,23 @@ RUN \
         \
         echo "Installing vscode extension: ${slug} by ${vendor} @ ${version} for ${VSCODE_TARGET} "; \
         \
-        echo "${platform_package_url}"; \
-        if ! curl -fJL --compressed --retry 5 -o "/usr/local/share/code-server/vsix/${extension}-${version}.vsix" \
-            -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" \
-            -H "x-market-user-id: ${uuid}" \
-            "${platform_package_url}"; then \
-            echo "No ${VSCODE_TARGET} VSIX found for ${extension}; falling back to universal package."; \
-            curl -fJL --compressed --retry 5 -o "/usr/local/share/code-server/vsix/${extension}-${version}.vsix" \
+        vendored="/tmp/vendor/${extension}-${version}.vsix"; \
+        if [[ -f "${vendored}" ]]; then \
+            echo "Using vendored VSIX: ${vendored}"; \
+            cp "${vendored}" "/usr/local/share/code-server/vsix/${extension}-${version}.vsix"; \
+        else \
+            echo "${platform_package_url}"; \
+            if ! curl -fJL --compressed --retry 5 -o "/usr/local/share/code-server/vsix/${extension}-${version}.vsix" \
                 -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" \
                 -H "x-market-user-id: ${uuid}" \
-                "${package_url}" \
-                || exit 1; \
+                "${platform_package_url}"; then \
+                echo "No ${VSCODE_TARGET} VSIX found for ${extension}; falling back to universal package."; \
+                curl -fJL --compressed --retry 5 -o "/usr/local/share/code-server/vsix/${extension}-${version}.vsix" \
+                    -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" \
+                    -H "x-market-user-id: ${uuid}" \
+                    "${package_url}" \
+                    || exit 1; \
+            fi; \
         fi; \
         vsix_path="/usr/local/share/code-server/vsix/${extension}-${version}.vsix"; \
         unzip -tq "${vsix_path}" >/dev/null \
