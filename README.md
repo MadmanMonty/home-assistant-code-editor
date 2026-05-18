@@ -31,7 +31,7 @@ After adding the repository:
 If the button does not work, add this repository manually:
 
 ```text
-https://github.com/gollyjer/addon-vscode
+https://github.com/gollyjer/home-assistant-code-editor
 ```
 
 ## What the included extensions do
@@ -64,7 +64,7 @@ More configuration and usage notes are available in
 [code-editor/DOCS.md](code-editor/DOCS.md).
 
 If something is not working, please
-[open an issue](https://github.com/gollyjer/addon-vscode/issues).
+[open an issue](https://github.com/gollyjer/home-assistant-code-editor/issues).
 
 ## Credits
 
@@ -76,4 +76,4 @@ and contributors.
 MIT License. See [LICENSE.md](LICENSE.md).
 
 [repository-badge]: https://img.shields.io/badge/Add_repository_to_my-Home%20Assistant-41BDF5?logo=home-assistant&style=for-the-badge
-[repository-url]: https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fgollyjer%2Faddon-vscode
+[repository-url]: https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fgollyjer%2Fhome-assistant-code-editor
