@@ -182,6 +182,15 @@ patch needs no changes to coexist with the directive feature.
   HA backups are the usual culprits, not this image's size.
 - **URL slug** is `home-assistant-code-editor`, not the old
   `addon-vscode`. Don't reintroduce the old slug.
+- **apt package pinning** — versions in the Dockerfile `apt-get install`
+  list are pinned for reproducibility *except* packages on Debian's
+  stable-update/security channel (`+deb13uN`) or with binary rebuilds
+  (`+bN`). Debian trixie prunes superseded versions of those from the
+  mirror, so exact pins break on every point release. `git`, `locales`,
+  `nginx-light`, `openssh-client`, `openssl`, and `zsh` are deliberately
+  unpinned. If a *pinned* package later fails the build with
+  `E: Version '...' was not found`, either bump the pin to the current
+  trixie version or unpin it the same way.
 - **Workspace guard** — code-server is configured to refuse `/` as a 
   workspace (indexing the whole container is expensive). Default is
   `/config`.

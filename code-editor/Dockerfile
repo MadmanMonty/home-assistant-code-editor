@@ -29,6 +29,14 @@ COPY patch-ha-schemas.py /tmp/patch-ha-schemas.py
 COPY vendor/ /tmp/vendor/
 
 # Setup base system
+#
+# apt package versions are pinned for reproducibility, EXCEPT packages
+# that ride Debian's stable-update/security channel (`+deb13uN`) or get
+# binary rebuilds (`+bN`). Debian trixie prunes superseded versions of
+# those from the mirror, which breaks exact pins on every point release,
+# so `git`, `locales`, `nginx-light`, `openssh-client`, `openssl`, and
+# `zsh` are intentionally left unpinned to track the current security
+# build. The base image itself is SHA-pinned, so the floor stays fixed.
 ARG BUILD_ARCH=amd64
 ARG CODE_SERVER_VERSION="v4.118.0"
 ARG HA_CLI_VERSION="5.1.0"
@@ -40,14 +48,14 @@ RUN \
         ack=3.8.1-1 \
         build-essential=12.12 \
         colordiff=1.0.21-1 \
-        git=1:2.47.3-0+deb13u1 \
+        git \
         iputils-ping=3:20240905-3 \
-        locales=2.41-12+deb13u2 \
+        locales \
         net-tools=2.10-1.3 \
-        nginx-light=1.26.3-3+deb13u2 \
+        nginx-light \
         nmap=7.95+dfsg-3 \
-        openssh-client=1:10.0p1-7+deb13u2 \
-        openssl=3.5.5-1~deb13u2 \
+        openssh-client \
+        openssl \
         python3-dev=3.13.5-1 \
         python3-venv=3.13.5-1 \
         python3=3.13.5-1 \
@@ -55,7 +63,7 @@ RUN \
         uuid-runtime=2.41-5 \
         wget=1.25.0-2 \
         zip=3.0-15 \
-        zsh=5.9-8+b21 \
+        zsh \
         less=668-1 \
     \
     && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
