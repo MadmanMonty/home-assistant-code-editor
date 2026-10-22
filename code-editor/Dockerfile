@@ -1,5 +1,5 @@
 # hadolint ignore=DL3006
-FROM ghcr.io/hassio-addons/debian-base:9.3.0
+FROM ghcr.io/hassio-addons/debian-base:9.5.1
 
 # Configure locale
 ENV \
